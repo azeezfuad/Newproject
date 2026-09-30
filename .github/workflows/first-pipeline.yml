@@ -1,0 +1,13 @@
+name: First Manual Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  hello:
+    name: Say Hello
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print welcome message
+        run: echo "Hello Azeez Opeoluwa, your first manual pipeline is running"
