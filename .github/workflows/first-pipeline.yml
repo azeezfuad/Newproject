@@ -3,6 +3,11 @@ name: First Manual Pipeline
 on:
   workflow_dispatch:
 
+env:
+  STUDENT_NAME: Azeez Opeoluwa
+  APP_NAME: github-actions-practice
+  ENVIRONMENT: dev
+
 jobs:
   hello:
     name: Say Hello
@@ -21,5 +26,11 @@ jobs:
       - name: List repository files
         run: ls -la
 
+      - name: Print variables
+        run: |
+          echo "Student name: $STUDENT_NAME"
+          echo "App name: $APP_NAME"
+          echo "Environment: $ENVIRONMENT"
+
       - name: Print welcome message
-        run: echo "Hello Azeez Opeoluwa, this command is running inside the Ubuntu runner"
+        run: echo "Hello $STUDENT_NAME, this command is running inside the Ubuntu runner"
