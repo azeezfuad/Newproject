@@ -9,5 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: List repository files
+        run: ls -la
+
       - name: Print welcome message
-        run: echo "Hello Azeez Opeoluwa, your first manual pipeline is running"
+        run: echo "Hello Azeez Opeoluwa, your repo files are now inside the runner"
