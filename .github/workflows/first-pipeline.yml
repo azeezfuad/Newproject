@@ -1,6 +1,9 @@
 name: First Manual Pipeline
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 env:
