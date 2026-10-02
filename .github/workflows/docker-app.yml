@@ -8,7 +8,6 @@ on:
 
 env:
   IMAGE_NAME: simple-docker-app
-  IMAGE_TAG: latest
 
 jobs:
   checkout:
@@ -41,7 +40,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t $IMAGE_NAME:$IMAGE_TAG .
+        run: docker build -t $IMAGE_NAME:${{ github.sha }} .
 
   run-container:
     name: 04 - Run Docker Container
@@ -53,10 +52,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker image again
-        run: docker build -t $IMAGE_NAME:$IMAGE_TAG .
+        run: docker build -t $IMAGE_NAME:${{ github.sha }} .
 
       - name: Run Docker container
-        run: docker run --rm $IMAGE_NAME:$IMAGE_TAG
+        run: docker run --rm $IMAGE_NAME:${{ github.sha }}
+
   upload-report:
     name: 05 - Upload Build Report
     runs-on: ubuntu-latest
@@ -67,7 +67,7 @@ jobs:
         run: |
           echo "Docker App Pipeline Report" > build-report.txt
           echo "Image name: $IMAGE_NAME" >> build-report.txt
-          echo "Image tag: $IMAGE_TAG" >> build-report.txt
+          echo "Image tag: ${{ github.sha }}" >> build-report.txt
           echo "Status: Docker image built and container ran successfully" >> build-report.txt
 
       - name: Upload build report artifact
