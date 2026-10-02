@@ -1,0 +1,29 @@
+name: Docker App Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: simple-docker-app
+  IMAGE_TAG: latest
+
+jobs:
+  docker-build-test:
+    name: Build and Test Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show Docker version
+        run: docker --version
+
+      - name: Build Docker image
+        run: docker build -t $IMAGE_NAME:$IMAGE_TAG .
+
+      - name: Run Docker container
+        run: docker run --rm $IMAGE_NAME:$IMAGE_TAG
