@@ -1,0 +1,16 @@
+name: Failure Practice Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fail-job:
+    name: Intentional Failure Job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Try to read missing file
+        run: cat missing-file.txt
