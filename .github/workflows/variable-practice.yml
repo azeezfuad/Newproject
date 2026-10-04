@@ -1,0 +1,19 @@
+name: Variable Practice Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  print-variables:
+    name: Print Repository Variables
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print app configuration
+        run: |
+          echo "App environment: ${{ vars.APP_ENV }}"
+          echo "App name: ${{ vars.APP_NAME }}"
+          echo "Image name: ${{ vars.IMAGE_NAME }}"
+          echo "Namespace: ${{ vars.NAMESPACE }}"
+          echo "Region: ${{ vars.REGION }}"
+          echo "Owner: ${{ vars.OWNER }}"
