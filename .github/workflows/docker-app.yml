@@ -21,6 +21,9 @@ jobs:
       - name: List repository files
         run: ls -la
 
+      - name: Print repository variable
+        run: echo "App environment is ${{ vars.APP_ENV }}"
+
   docker-verify:
     name: 02 - Verify Docker
     runs-on: ubuntu-latest
@@ -29,49 +32,4 @@ jobs:
     steps:
       - name: Show Docker version
         run: docker --version
-
-  build-image:
-    name: 03 - Build Docker Image
-    runs-on: ubuntu-latest
-    needs: docker-verify
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Build Docker image
-        run: docker build -t $IMAGE_NAME:${{ github.sha }} .
-
-  run-container:
-    name: 04 - Run Docker Container
-    runs-on: ubuntu-latest
-    needs: build-image
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Build Docker image again
-        run: docker build -t $IMAGE_NAME:${{ github.sha }} .
-
-      - name: Run Docker container
-        run: docker run --rm $IMAGE_NAME:${{ github.sha }}
-
-  upload-report:
-    name: 05 - Upload Build Report
-    runs-on: ubuntu-latest
-    needs: run-container
-
-    steps:
-      - name: Create build report
-        run: |
-          echo "Docker App Pipeline Report" > build-report.txt
-          echo "Image name: $IMAGE_NAME" >> build-report.txt
-          echo "Image tag: ${{ github.sha }}" >> build-report.txt
-          echo "Status: Docker image built and container ran successfully" >> build-report.txt
-
-      - name: Upload build report artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: docker-build-report
-          path: build-report.txt
+        
