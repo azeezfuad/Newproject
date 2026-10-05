@@ -1,0 +1,26 @@
+name: Pull Request Check Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pr-check:
+    name: PR Docker Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show branch information
+        run: |
+          echo "Pull request branch: ${{ github.head_ref }}"
+          echo "Target branch: ${{ github.base_ref }}"
+
+      - name: Build Docker image
+        run: docker build -t pr-check:latest .
+
+      - name: Run Docker container
+        run: docker run --rm pr-check:latest
