@@ -15,5 +15,5 @@ jobs:
       - name: List files
         run: ls -la
 
-      - name: Build Docker image with wrong file path
-        run: docker build -f Dockerfile.missing -t debug-practice:latest .
+      - name: Build Docker image
+        run: docker build -t debug-practice:latest  .
