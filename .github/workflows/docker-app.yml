@@ -94,9 +94,15 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker image with commit tag
-        run: docker build -t ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_NAME }}:${{ github.sha }} .
+      - name: Build Docker image with commit and latest tags
+        run: |
+          docker build \
+            -t ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_NAME }}:${{ github.sha }} \
+            -t ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_NAME }}:latest \
+            .
 
       - name: Push Docker image to Docker Hub
-        run: docker push ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_NAME }}:${{ github.sha }}
+        run: |
+          docker push ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_NAME }}:latest
         
