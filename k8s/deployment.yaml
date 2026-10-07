@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-docker-app
+  labels:
+    app: simple-docker-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-docker-app
+  template:
+    metadata:
+      labels:
+        app: simple-docker-app
+    spec:
+      containers:
+        - name: simple-docker-app
+          image: fuad05/simple-docker-app:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_ENV
+              value: "dev"
+            - name: APP_NAME
+              value: "simple-docker-app"
+            - name: OWNER
+              value: "Azeez Opeoluwa"

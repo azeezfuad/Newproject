@@ -22,5 +22,14 @@ jobs:
       - name: Build Docker image
         run: docker build -t pr-check:latest .
 
-      - name: Run Docker container
-        run: docker run --rm pr-check:latest
+      - name: Run Docker container in background
+        run: docker run -d --name pr-check-app -p 8080:8080 pr-check:latest
+
+      - name: Test app response
+        run: |
+          sleep 5
+          curl --fail http://localhost:8080
+
+      - name: Stop Docker container
+        if: always()
+        run: docker stop pr-check-app
