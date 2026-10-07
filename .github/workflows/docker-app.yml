@@ -54,8 +54,17 @@ jobs:
       - name: Build Docker image again
         run: docker build -t ${{ vars.IMAGE_NAME }}:${{ github.sha }} .
 
-      - name: Run Docker container
-        run: docker run --rm ${{ vars.IMAGE_NAME }}:${{ github.sha }}
+      - name: Run Docker container in background
+        run: docker run -d --name docker-app-test -p 8080:8080 ${{ vars.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Test app response
+        run: |
+          sleep 5
+          curl --fail http://localhost:8080
+
+      - name: Stop Docker container
+        if: always()
+        run: docker stop docker-app-test || true
 
   scan-image:
     name: 05 - Scan Docker Image with Trivy
