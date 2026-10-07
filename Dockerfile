@@ -1,9 +1,9 @@
-FROM alpine:3.20
+FROM python:3.12-alpine
 
 WORKDIR /app
 
-COPY app.sh /app/app.sh
+COPY app.py /app/app.py
 
-RUN chmod +x /app/app.sh
+EXPOSE 8080
 
-CMD ["/app/app.sh"]
+CMD ["python", "/app/app.py"]
