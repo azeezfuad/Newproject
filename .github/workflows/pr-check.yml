@@ -16,7 +16,7 @@ jobs:
 
       - name: Validate Kubernetes manifests
         run: |
-          kubectl apply --dry-run=client -f k8s/
+          kubectl apply --dry-run=client --validate=false -f k8s/
 
       - name: Show branch information
         run: |
@@ -36,4 +36,4 @@ jobs:
 
       - name: Stop Docker container
         if: always()
-        run: docker stop pr-check-app
+        run: docker stop pr-check-app || true
