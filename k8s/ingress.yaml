@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: simple-docker-app-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: simple-docker-app.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: simple-docker-app-service
+                port:
+                  number: 80
